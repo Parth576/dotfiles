@@ -7,10 +7,10 @@
 # different AUR helper.
 
 # Installing required packages using pacman 
-pacman -S --needed --noconfirm - < pacman.txt
+pacman -S --needed --noconfirm - < install.txt
 
 # Installing required packages from AUR using yay
-yay -S --needed --noconfirm - < aur.txt
+sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
 # Installing vim-plug (manages vim plugins)
 # Run :PlugInstall in neovim when opened for the first time to install all the plugins

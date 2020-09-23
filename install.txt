@@ -1,7 +1,7 @@
 zsh
 i3-gaps
 kitty
-polybar
 rofi
 lxappearance
 neovim
+exa
