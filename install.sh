@@ -14,8 +14,10 @@ sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
 # Installing vim-plug (manages vim plugins)
 # Run :PlugInstall in neovim when opened for the first time to install all the plugins
-#sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-#       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+sudo -u $SUDO_USER nvim +PlugInstall +qall
 
 # i3
 if [ -d "/home/$SUDO_USER/.config/i3" ]
