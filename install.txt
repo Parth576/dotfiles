@@ -1,5 +1,6 @@
 zsh
 i3-gaps
+feh
 kitty
 rofi
 lxappearance
