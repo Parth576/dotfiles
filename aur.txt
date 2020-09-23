@@ -1,0 +1,2 @@
+spaceship-prompt-git
+matcha-gtk-theme-git
