@@ -9,6 +9,11 @@
 # Installing required packages using pacman 
 pacman -S --needed --noconfirm - < install.txt
 
+# Installing yay
+git clone http://aur.archlinux.org/yay.git
+cp -r yay/. .
+makepkg -si
+
 # Installing required packages from AUR using yay
 sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
@@ -67,6 +72,12 @@ cp ./zshrc /home/$SUDO_USER/.zshrc
 
 # wallpaper
 cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+
+# xinitrc
+cp ./xinitrc /home/$SUDO_USER/.xinitrc
+
+# enabling lightdm
+systemctl enable lightdm.service
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
