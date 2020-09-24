@@ -67,3 +67,6 @@ cp ./zshrc /home/$SUDO_USER/.zshrc
 
 # wallpaper
 cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+
+# change shell to zsh
+sudo -u $SUDO_USER chsh -s $(which zsh)
