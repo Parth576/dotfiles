@@ -16,7 +16,7 @@ sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-sudo -u $SUDO_USER nvim +'PlugInstall --sync' +qa
+sudo -u $SUDO_USER nvim +PlugInstall +qa
 
 # i3
 if [ -d "/home/$SUDO_USER/.config/i3" ]
@@ -66,7 +66,13 @@ fi
 cp ./zshrc /home/$SUDO_USER/.zshrc
 
 # wallpaper
-cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+if [ -d "/home/$SUDO_USER/Downloads" ]
+then
+    cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+else 
+    mkdir /home/$SUDO_USER/Downloads
+    cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+fi
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
