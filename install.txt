@@ -9,9 +9,4 @@ exa
 zsh-history-substring-search
 zsh-autosuggestions
 zsh-syntax-highlighting
-xorg
-xorg-xinit
-picom
-lightdm
-lightdm-gtk-greeter
 base-devel

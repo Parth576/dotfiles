@@ -14,6 +14,18 @@ git clone http://aur.archlinux.org/yay.git
 cp -r yay/. .
 makepkg -si
 
+# installing xorg and lightdm and copying xinitrc
+echo "WARNING : Say yes to this only if you have an absolute base install and have not yet set up xorg or a display manager"
+read -p "Do you want to install xorg, xorg-xinit, lightdm, lightdm-gtk-greeter? (y/n) : " option
+if [[$option="y"]]
+then
+    pacman -S --needed --noconfirm - < extras.txt
+    # xinitrc
+    cp ./xinitrc /home/$SUDO_USER/.xinitrc
+    systemctl enable lightdm.service
+else 
+    echo "Assuming you have that stuff installed, let's move ahead"
+fi
 # Installing required packages from AUR using yay
 sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
@@ -78,12 +90,6 @@ else
     mkdir /home/$SUDO_USER/Downloads
     cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
 fi
-
-# xinitrc
-cp ./xinitrc /home/$SUDO_USER/.xinitrc
-
-# enabling lightdm
-systemctl enable lightdm.service
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)

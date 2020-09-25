@@ -1,0 +1,6 @@
+xorg
+xorg-xinit
+picom
+lightdm
+lightdm-gtk-greeter
+
