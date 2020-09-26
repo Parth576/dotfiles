@@ -38,7 +38,8 @@ map <C-;> :vsplit new<CR>
 map <A-w> :close<CR>
 map <C-h> :bprev<CR>
 map <C-l> :bnext<CR>
-map <C-d> :bd<CR>
+map <A-d> :bd<CR>
+"map <C-d> :bd<CR>
 map <C-p> :FZF<CR>
 
 call plug#begin('~/.vim/plugged')
@@ -46,7 +47,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
