@@ -1,3 +1,4 @@
+#!/bin/bash
 #This script will do the following things: 
 #   1. Install packages and dependencies (i3-gaps, polybar, etc)
 #   2. Copy all dotfiles to correct locations
@@ -12,12 +13,13 @@ pacman -S --needed --noconfirm - < install.txt
 # Installing yay
 git clone http://aur.archlinux.org/yay.git
 cp -r yay/. .
-makepkg -si
+sudo -u $SUDO_USER makepkg --noconfirm -si
 
 # installing xorg and lightdm and copying xinitrc
 echo "WARNING : Say yes to this only if you have an absolute base install and have not yet set up xorg or a display manager"
 read -p "Do you want to install xorg, xorg-xinit, lightdm, lightdm-gtk-greeter? (y/n) : " option
-if [[$option="y"]]
+
+if [[ $option = "y" ]]
 then
     pacman -S --needed --noconfirm - < extras.txt
     # xinitrc
@@ -33,7 +35,7 @@ sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-sudo -u $SUDO_USER nvim --headless +PlugInstall +qa
+sudo -u $SUDO_USER nvim --headless +PlugInstall +qall
 
 # i3
 if [ -d "/home/$SUDO_USER/.config/i3" ]
