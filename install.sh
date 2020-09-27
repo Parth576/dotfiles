@@ -7,78 +7,85 @@
 # AUR. Please comment out those lines for AUR installation if you use a 
 # different AUR helper.
 
+echo "\nWARNING : Say yes to this only if you have an absolute base install and have not yet set up xorg or a display manager\n"
+read -p "Do you want to install xorg, xorg-xinit, lightdm, lightdm-gtk-greeter? (y/n) : " option
+
 # Installing required packages using pacman 
+echo "--------------- INSTALLING PACMAN PACKAGES --------------- \n"
 pacman -S --needed --noconfirm - < install.txt
 
 # Installing yay
-git clone http://aur.archlinux.org/yay.git
-cp -r yay/. .
+echo "--------------- INSTALLING YAY (AUR HELPER) --------------- \n"
+sudo -u $SUDO_USER git clone http://aur.archlinux.org/yay.git
+sudo -u $SUDO_USER cp -r yay/. .
 sudo -u $SUDO_USER makepkg --noconfirm -si
 
-# installing xorg and lightdm and copying xinitrc
-echo "WARNING : Say yes to this only if you have an absolute base install and have not yet set up xorg or a display manager"
-read -p "Do you want to install xorg, xorg-xinit, lightdm, lightdm-gtk-greeter? (y/n) : " option
-
+# installing xorg and lightdm and copying xinitrc based on option entered
+echo "--------------- INSTALLING DISPLAY MANAGER --------------- \n"
 if [[ $option = "y" ]]
 then
     pacman -S --needed --noconfirm - < extras.txt
     # xinitrc
-    cp ./xinitrc /home/$SUDO_USER/.xinitrc
+    sudo -u $SUDO_USER cp ./xinitrc /home/$SUDO_USER/.xinitrc
     systemctl enable lightdm.service
 else 
     echo "Assuming you have that stuff installed, let's move ahead"
 fi
+
 # Installing required packages from AUR using yay
+echo "--------------- INSTALLING AUR PACKAGES --------------- \n"
 sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
 # Installing vim-plug and the plugins (manages vim plugins)
+echo "--------------- INSTALLING NEOVIM PLUGINS --------------- \n"
 sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 sudo -u $SUDO_USER nvim --headless +PlugInstall +qall
 
+echo "--------------- COPYING ALL CONFIGS --------------- \n"
 # i3
 if [ -d "/home/$SUDO_USER/.config/i3" ]
 then
-    cp ./config/i3/config /home/$SUDO_USER/.config/i3/config
+    sudo -u $SUDO_USER cp ./config/i3/config /home/$SUDO_USER/.config/i3/config
 else 
-    mkdir /home/$SUDO_USER/.config/i3
-    cp ./config/i3/config /home/$SUDO_USER/.config/i3/config
+    sudo -u $SUDO_USER mkdir /home/$SUDO_USER/.config/i3
+    sudo -u $SUDO_USER cp ./config/i3/config /home/$SUDO_USER/.config/i3/config
 fi
 
 # neovim
 if [ -d "/home/$SUDO_USER/.config/nvim" ]
 then
-    cp ./config/nvim/init.vim /home/$SUDO_USER/.config/nvim/init.vim
+    sudo -u $SUDO_USER cp ./config/nvim/init.vim /home/$SUDO_USER/.config/nvim/init.vim
 else 
-    mkdir /home/$SUDO_USER/.config/nvim
-    cp ./config/nvim/init.vim /home/$SUDO_USER/.config/nvim/init.vim
+    sudo -u $SUDO_USER mkdir /home/$SUDO_USER/.config/nvim
+    sudo -u $SUDO_USER cp ./config/nvim/init.vim /home/$SUDO_USER/.config/nvim/init.vim
 fi
 
 
 # kitty
 if [ -d "/home/$SUDO_USER/.config/kitty" ]
 then
-    cp ./config/kitty/kitty.conf /home/$SUDO_USER/.config/kitty/kitty.conf
+    sudo -u $SUDO_USER cp ./config/kitty/kitty.conf /home/$SUDO_USER/.config/kitty/kitty.conf
 else 
-    mkdir /home/$SUDO_USER/.config/kitty
-    cp ./config/kitty/kitty.conf /home/$SUDO_USER/.config/kitty/kitty.conf
+    sudo -u $SUDO_USER mkdir /home/$SUDO_USER/.config/kitty
+    sudo -u $SUDO_USER cp ./config/kitty/kitty.conf /home/$SUDO_USER/.config/kitty/kitty.conf
 fi
 
 # polybar
 if [ -d "/home/$SUDO_USER/.config/polybar" ]
 then
-    cp ./config/polybar/* /home/$SUDO_USER/.config/polybar/
+    sudo -u $SUDO_USER cp ./config/polybar/* /home/$SUDO_USER/.config/polybar/
 else 
-    cp -R ./config/polybar /home/$SUDO_USER/.config/
+    sudo -u $SUDO_USER cp -R ./config/polybar /home/$SUDO_USER/.config/
 fi
 
 # rofi
 if [ -d "/home/$SUDO_USER/.config/rofi" ]
 then
-    cp ./config/rofi/* /home/$SUDO_USER/.config/rofi/
+    sudo -u $SUDO_USER cp ./config/rofi/* /home/$SUDO_USER/.config/rofi/
 else 
-    cp -R ./config/rofi /home/$SUDO_USER/.config/
+    sudo -u $SUDO_USER cp -R ./config/rofi /home/$SUDO_USER/.config/
 fi
 
 # zsh
@@ -87,10 +94,10 @@ cp ./zshrc /home/$SUDO_USER/.zshrc
 # wallpaper
 if [ -d "/home/$SUDO_USER/Downloads" ]
 then
-    cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+    sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
 else 
-    mkdir /home/$SUDO_USER/Downloads
-    cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+    sudo -u $SUDO_USER mkdir /home/$SUDO_USER/Downloads
+    sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
 fi
 
 # change shell to zsh
