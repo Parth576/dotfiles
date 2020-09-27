@@ -10,21 +10,21 @@
 col='\033[1;36m'
 nc='\033[0m'
 
-echo "\nWARNING : Say yes to this only if you have an absolute base install and have not yet set up xorg or a display manager\n"
+echo -e "\nWARNING : Say yes to this only if you have an absolute base install and have not yet set up xorg or a display manager\n"
 read -p "Do you want to install xorg, xorg-xinit, lightdm, lightdm-gtk-greeter? (y/n) : " option
 
 # Installing required packages using pacman 
-echo "${col}--------------- INSTALLING PACMAN PACKAGES ---------------${nc} \n"
+echo -e "${col}--------------- INSTALLING PACMAN PACKAGES ---------------${nc} \n"
 pacman -S --needed --noconfirm - < install.txt
 
 # Installing yay
-echo "${col}--------------- INSTALLING YAY (AUR HELPER) ---------------${nc} \n"
+echo -e "${col}--------------- INSTALLING YAY (AUR HELPER) ---------------${nc} \n"
 sudo -u $SUDO_USER git clone http://aur.archlinux.org/yay.git
 sudo -u $SUDO_USER cp -r yay/. .
 sudo -u $SUDO_USER makepkg --noconfirm -si
 
 # installing xorg and lightdm and copying xinitrc based on option entered
-echo "${col}--------------- INSTALLING DISPLAY MANAGER ---------------${nc} \n"
+echo -e "${col}--------------- INSTALLING DISPLAY MANAGER ---------------${nc} \n"
 if [[ $option = "y" ]]
 then
     pacman -S --needed --noconfirm - < extras.txt
@@ -36,17 +36,17 @@ else
 fi
 
 # Installing required packages from AUR using yay
-echo "${col}--------------- INSTALLING AUR PACKAGES ---------------${nc} \n"
+echo -e "${col}--------------- INSTALLING AUR PACKAGES ---------------${nc} \n"
 sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
 # Installing vim-plug and the plugins (manages vim plugins)
-echo "${col}--------------- INSTALLING NEOVIM PLUGINS ---------------${nc} \n"
+echo -e "${col}--------------- INSTALLING NEOVIM PLUGINS ---------------${nc} \n"
 sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 sudo -u $SUDO_USER nvim --headless +PlugInstall +qall
 
-echo "${col}--------------- COPYING ALL CONFIGS ---------------${nc} \n"
+echo -e "${col}--------------- COPYING ALL CONFIGS ---------------${nc} \n"
 # i3
 if [ -d "/home/$SUDO_USER/.config/i3" ]
 then
