@@ -55,7 +55,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 call plug#end()
 
-colorscheme onedark
+silent! colorscheme onedark
 
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline_left_sep='>'
