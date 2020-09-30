@@ -19,6 +19,7 @@
 [colors]
 ;background = ${xrdb:color0:#222}
 background = #222
+;background = #aa2F343F
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -30,11 +31,11 @@ alert = #bd2c40
 [bar/example]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 27
+height = 22
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 6.0
-fixed-center = false
+radius = 0
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -44,25 +45,26 @@ line-color = #f00
 
 border-size = 4
 border-color = #00000000
+;border-color = ${colors.background}
 
 padding-left = 0
-padding-right = 2
+padding-right = 1
 
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = fixed:pixelsize=10;1
+font-0 = fixed:pixelsize=9;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-2 = siji:pixelsize=9;1
 font-3 = FiraCode-Medium:size=8;2
 
-modules-left = memory battery temperature 
+modules-left = memory battery temperature wlan 
 modules-center = i3 
-modules-right = filesystem xbacklight alsa pulseaudio wlan eth date powermenu
+modules-right = filesystem xbacklight alsa pulseaudio eth date powermenu
 
 tray-position = right
-tray-padding = 2
-;tray-background = #0063ff
+tray-padding = 3
+;tray-background = #aa2F343F
 
 ;wm-restack = bspwm
 ;wm-restack = i3
