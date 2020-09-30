@@ -44,7 +44,7 @@ echo -e "\n${col}--------------- INSTALLING NEOVIM PLUGINS ---------------${nc} 
 sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-sudo -u $SUDO_USER nvim --headless +PlugInstall +qall
+#sudo -u $SUDO_USER nvim --headless +'PlugInstall --sync' +qa
 
 echo -e "\n${col}--------------- COPYING ALL CONFIGS ---------------${nc} \n"
 # i3
@@ -65,6 +65,7 @@ else
     sudo -u $SUDO_USER cp ./config/nvim/init.vim /home/$SUDO_USER/.config/nvim/init.vim
 fi
 
+sudo -u $SUDO_USER nvim --headless +PlugInstall +qa
 
 # kitty
 if [ -d "/home/$SUDO_USER/.config/kitty" ]
