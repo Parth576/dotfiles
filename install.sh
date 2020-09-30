@@ -106,8 +106,8 @@ fi
 
 # Installing spaceship prompt
 sudo -u $SUDO_USER git clone https://aur.archlinux.org/spaceship-prompt-git.git --depth=1
-sudo -u $SUDO_USER cd spaceship-prompt-git
-sudo -u $SUDO_USER makepkg -si --noconfirm
+sudo -u $SUDO_USER (cd spaceship-prompt-git && makepkg -si --noconfirm)
+sleep 5
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
