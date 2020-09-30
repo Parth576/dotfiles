@@ -1,4 +1,3 @@
-spaceship-prompt-git
 matcha-gtk-theme-git
 polybar
 nerd-fonts-fira-code

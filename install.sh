@@ -14,17 +14,17 @@ echo -e "\nWARNING : Say yes to this only if you have an absolute base install a
 read -p "Do you want to install xorg, xorg-xinit, lightdm, lightdm-gtk-greeter? (y/n) : " option
 
 # Installing required packages using pacman 
-echo -e "${col}--------------- INSTALLING PACMAN PACKAGES ---------------${nc} \n"
+echo -e "\n${col}--------------- INSTALLING PACMAN PACKAGES ---------------${nc} \n"
 pacman -S --needed --noconfirm - < install.txt
 
 # Installing yay
-echo -e "${col}--------------- INSTALLING YAY (AUR HELPER) ---------------${nc} \n"
+echo -e "\n${col}--------------- INSTALLING YAY (AUR HELPER) ---------------${nc} \n"
 sudo -u $SUDO_USER git clone http://aur.archlinux.org/yay.git
 sudo -u $SUDO_USER cp -r yay/. .
 sudo -u $SUDO_USER makepkg --noconfirm -si
 
 # installing xorg and lightdm and copying xinitrc based on option entered
-echo -e "${col}--------------- INSTALLING DISPLAY MANAGER ---------------${nc} \n"
+echo -e "\n${col}--------------- INSTALLING DISPLAY MANAGER ---------------${nc} \n"
 if [[ $option = "y" ]]
 then
     pacman -S --needed --noconfirm - < extras.txt
@@ -32,21 +32,21 @@ then
     sudo -u $SUDO_USER cp ./xinitrc /home/$SUDO_USER/.xinitrc
     systemctl enable lightdm.service
 else 
-    echo "Assuming you have that stuff installed, let's move ahead"
+    echo "\nAssuming you have that stuff installed, let's move ahead\n"
 fi
 
 # Installing required packages from AUR using yay
-echo -e "${col}--------------- INSTALLING AUR PACKAGES ---------------${nc} \n"
+echo -e "\n${col}--------------- INSTALLING AUR PACKAGES ---------------${nc} \n"
 sudo -u $SUDO_USER yay -S --needed --noconfirm - < aur.txt
 
 # Installing vim-plug and the plugins (manages vim plugins)
-echo -e "${col}--------------- INSTALLING NEOVIM PLUGINS ---------------${nc} \n"
+echo -e "\n${col}--------------- INSTALLING NEOVIM PLUGINS ---------------${nc} \n"
 sudo -u $SUDO_USER sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 sudo -u $SUDO_USER nvim --headless +PlugInstall +qall
 
-echo -e "${col}--------------- COPYING ALL CONFIGS ---------------${nc} \n"
+echo -e "\n${col}--------------- COPYING ALL CONFIGS ---------------${nc} \n"
 # i3
 if [ -d "/home/$SUDO_USER/.config/i3" ]
 then
@@ -102,6 +102,11 @@ else
     sudo -u $SUDO_USER mkdir /home/$SUDO_USER/Downloads
     sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
 fi
+
+# Installing spaceship prompt
+sudo -u $SUDO_USER git clone https://aur.archlinux.org/spaceship-prompt-git.git --depth=1
+sudo -u $SUDO_USER cd spaceship-prompt-git
+sudo -u $SUDO_USER makepkg -si --noconfirm
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
