@@ -2,3 +2,4 @@ matcha-gtk-theme-git
 polybar
 nerd-fonts-fira-code
 siji-git
+spaceship-prompt-git

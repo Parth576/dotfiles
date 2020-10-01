@@ -104,10 +104,5 @@ else
     sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
 fi
 
-# Installing spaceship prompt
-sudo -u $SUDO_USER git clone https://aur.archlinux.org/spaceship-prompt-git.git --depth=1
-sudo -u $SUDO_USER (cd spaceship-prompt-git && makepkg -si --noconfirm)
-sleep 5
-
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
