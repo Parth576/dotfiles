@@ -3,3 +3,4 @@ polybar
 nerd-fonts-fira-code
 siji-git
 spaceship-prompt-git
+betterlockscreen
