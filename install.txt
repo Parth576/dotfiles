@@ -13,3 +13,4 @@ base-devel
 networkmanager
 network-manager-applet
 noto-fonts
+playerctl
