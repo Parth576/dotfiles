@@ -92,6 +92,16 @@ else
     sudo -u $SUDO_USER cp -R ./config/rofi /home/$SUDO_USER/.config/
 fi
 
+# dunst
+if [ -d "/home/$SUDO_USER/.config/dunst" ]
+then
+    sudo -u $SUDO_USER cp ./config/dunst/dunstrc /home/$SUDO_USER/.config/dunst/dunstrc
+else 
+    sudo -u $SUDO_USER mkdir /home/$SUDO_USER/.config/dunst
+    sudo -u $SUDO_USER cp ./config/dunst/dunstrc /home/$SUDO_USER/.config/dunst/dunstrc
+fi
+
+
 # zsh
 cp ./zshrc /home/$SUDO_USER/.zshrc
 
@@ -103,6 +113,8 @@ else
     sudo -u $SUDO_USER mkdir /home/$SUDO_USER/Downloads
     sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
 fi
+
+betterlockscreen -u ~/Downloads/mountains-1412683.jpg -b 0.5
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
