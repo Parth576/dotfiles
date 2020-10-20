@@ -1,5 +1,5 @@
 # dotfiles
-As the repository name suggests, this is a collection of my dotfiles. I have also created an installation script to install the required programs and copy the files automatically 
+As the repository name suggests, this is a collection of my dotfiles. I have also created an installation script to install the required programs and copy the files automatically (i3, zsh, polybar, neovim, dunst, rofi, kitty)
 
 ## Select the branch based on the config
 
