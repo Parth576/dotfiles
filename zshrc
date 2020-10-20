@@ -28,6 +28,7 @@ alias nmode="setxkbmap -option"
 alias vim="nvim"
 alias ls="exa --long --group-directories-first"
 alias tree="exa --tree --level=2"
+alias icat="kitty +kitten icat"
 
 ## Keybindings section
 bindkey -e
@@ -155,6 +156,15 @@ export LESS=-r
 
 export GOPATH="$HOME/go"
 
+# pdf() {
+#    if [ $# -eq 0 ]
+#        then
+#            echo "Please provide file path"
+#        else 
+#            exec zathura $1 &
+#    fi
+#}
+
 # $ mkvenv myvirtualenv # creates venv under ~/.venv/
 # $ venv myvirtualenv   # activates venv
 # $ deactivate          # deactivates venv
@@ -201,11 +211,23 @@ lsvenv() {
 	deactivate
 	echo $myvar
 }
+
+flaskenv() {
+    if [ $# -eq 0 ]
+    then
+        echo "Please provide filename (something.py)"
+    else
+        export FLASK_APP="$PWD/$1" && export FLASK_ENV=development
+    fi
+}
+
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 alias soundon='pacmd set-card-profile <alsa_card.pci-0000_00_1f.3> a2dp_sink'
+#alias awscli='/usr/local/bin/aws'
+export PATH=$PATH:/usr/local/bin/aws
 ## Plugins section: Enable fish style features
 # Use syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -51,9 +51,9 @@ cp ./zshrc $HOME/.zshrc
 # wallpaper
 if [ -d "$HOME/Downloads" ]
 then
-    cp ./mountains-1412683.jpg $HOME/Downloads/mountains-1412683.jpg
+    cp ./wallpaper.png $HOME/Downloads/wallpaper.png
 else 
     mkdir $HOME/Downloads
-    cp ./mountains-1412683.jpg $HOME/Downloads/mountains-1412683.jpg
+    cp ./wallpaper.png $HOME/Downloads/wallpaper.png
 fi
 

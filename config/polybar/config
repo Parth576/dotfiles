@@ -18,8 +18,8 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-;background = #aa222
-background = #aa2F343F
+background = #aa222
+;background = #aa2F343F
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -37,6 +37,7 @@ height = 27
 ;offset-y = 1%
 radius = 0
 fixed-center = true
+;bottom=true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -152,12 +153,16 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index% 
-label-focused-background = ${colors.background-alt}
-;label-focused-underline= ${colors.primary}
+;label-focused-foreground = #49d6cd
+;label-focused-background = ${colors.background-alt}
+label-focused-background = ${colors.background}
+;label-focused-background = #aa07abd9
+label-focused-underline= #aa07abd9
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
+;label-unfocused-foreground = #07abd9
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
@@ -169,7 +174,7 @@ label-visible-padding = ${self.label-focused-padding}
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 1
+label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
@@ -361,7 +366,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 type = internal/battery
 battery = BAT0
 adapter = ADP1
-full-at = 98
+full-at = 100
 
 format-charging = <label-charging>
 format-charging-prefix="  "

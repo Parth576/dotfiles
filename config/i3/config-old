@@ -19,6 +19,7 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id xinput set-prop 17 339 1
 exec_always --no-startup-id xinput set-prop 17 359 1
 
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
@@ -28,7 +29,7 @@ focus_follows_mouse no
 #exec --no-startup-id xinput set-prop 14 359 1
 #exec --no-startup-id xinput set-props 14 339 
 exec --no-startup-id gsettings set org.gnome.ControlCenter last-panel ''
-
+exec --no-startup-id dunst 
 exec_always --no-startup-id feh --bg-scale ~/Downloads/mountains-1412683.jpg
 #exec_always --no-startup-id feh --bg-scale ~/Downloads/minimal-wallpaper.jpg
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -49,6 +50,7 @@ bindsym $mod+q exec betterlockscreen -l dim
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 exec --no-startup-id caffeine
+exec --no-startup-id blueman-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
