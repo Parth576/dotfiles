@@ -30,7 +30,7 @@ focus_follows_mouse no
 #exec --no-startup-id xinput set-props 14 339 
 exec --no-startup-id gsettings set org.gnome.ControlCenter last-panel ''
 exec --no-startup-id dunst 
-exec_always --no-startup-id feh --bg-scale ~/Downloads/mountains-1412683.jpg
+exec_always --no-startup-id feh --bg-scale ~/Downloads/wallpaper.jpg
 #exec_always --no-startup-id feh --bg-scale ~/Downloads/minimal-wallpaper.jpg
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
