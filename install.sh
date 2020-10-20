@@ -108,13 +108,11 @@ cp ./zshrc /home/$SUDO_USER/.zshrc
 # wallpaper
 if [ -d "/home/$SUDO_USER/Downloads" ]
 then
-    sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+    sudo -u $SUDO_USER cp ./wallpaper.jpg /home/$SUDO_USER/Downloads/wallpaper.jpg
 else 
     sudo -u $SUDO_USER mkdir /home/$SUDO_USER/Downloads
-    sudo -u $SUDO_USER cp ./mountains-1412683.jpg /home/$SUDO_USER/Downloads/mountains-1412683.jpg
+    sudo -u $SUDO_USER cp ./wallpaper.jpg /home/$SUDO_USER/Downloads/wallpaper.jpg
 fi
-
-betterlockscreen -u ~/Downloads/mountains-1412683.jpg -b 0.5
 
 # change shell to zsh
 sudo -u $SUDO_USER chsh -s $(which zsh)
