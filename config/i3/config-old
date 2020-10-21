@@ -16,8 +16,8 @@ set $down j
 set $left h
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id xinput set-prop 17 339 1
-exec_always --no-startup-id xinput set-prop 17 359 1
+exec_always --no-startup-id xinput set-prop 17 360 1
+exec_always --no-startup-id xinput set-prop 17 340 1
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -30,8 +30,13 @@ focus_follows_mouse no
 #exec --no-startup-id xinput set-props 14 339 
 exec --no-startup-id gsettings set org.gnome.ControlCenter last-panel ''
 exec --no-startup-id dunst 
-exec_always --no-startup-id feh --bg-scale ~/Downloads/mountains-1412683.jpg
+
+#exec_always --no-startup-id feh --bg-scale ~/Downloads/mountains-1412683.jpg
 #exec_always --no-startup-id feh --bg-scale ~/Downloads/minimal-wallpaper.jpg
+#exec_always --no-startup-id feh --bg-scale ~/Downloads/wallpaper1.jpg
+#exec_always --no-startup-id feh --bg-scale ~/Downloads/wallpapers/0102.jpg
+exec_always --no-startup-id feh --bg-scale ~/Downloads/wallpaper.png
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -173,7 +178,9 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 #client.focused             #03d7fc #285577 #ffffff #2e9ef4   #285577
 
-client.focused #555555 #555555 #ffffff #0a5ccf #07abd9   
+#client.focused #555555 #555555 #ffffff #0a5ccf #07abd9   
+
+client.focused #555555 #555555 #ffffff #07abd9 #07abd9   
 
 #client.focused #555555 #555555 #ffffff #2e9ef4  #CC0000
 # reload the configuration file
@@ -183,9 +190,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-for_window [class=".*"] border pixel 3
-gaps outer 3 
-gaps inner 15
+for_window [class=".*"] border pixel 2
+gaps outer 2 
+gaps inner 10
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
