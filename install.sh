@@ -101,6 +101,14 @@ else
     sudo -u $SUDO_USER cp ./config/dunst/dunstrc /home/$SUDO_USER/.config/dunst/dunstrc
 fi
 
+# picom
+if [ -d "/home/$SUDO_uSER/.config/picom" ]
+then 
+    sudo -u $SUDO_USER cp ./config/picom/picom.conf /home/$SUDO_USER/.config/picom/picom.conf
+then
+    sudo -u $SUDO_USER mkdir /home/$SUDO_USER/.config/picom
+    sudo -u $SUDO_USER cp ./config/picom/picom.conf /home/$SUDO_USER/.config/picom/picom.conf
+
 
 # zsh
 cp ./zshrc /home/$SUDO_USER/.zshrc

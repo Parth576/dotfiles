@@ -45,6 +45,15 @@ else
     cp -R ./config/rofi $HOME/.config/
 fi
 
+# picom
+if [ -d "$HOME/.config/picom" ]
+then
+    cp ./config/picom/picom.conf $HOME/.config/picom/picom.conf
+else 
+    mkdir /home/$SUDO_USER/.config/picom
+    cp ./config/picom/picom.conf $HOME/.config/picom/picom.conf
+fi
+
 # zsh
 cp ./zshrc $HOME/.zshrc
 
