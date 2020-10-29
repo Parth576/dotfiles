@@ -16,3 +16,7 @@ noto-fonts
 playerctl
 dunst
 picom
+lxsession
+udisks2
+udiskie
+pacman-contrib
