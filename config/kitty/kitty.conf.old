@@ -10,9 +10,9 @@ tab_title_template "{index}"
 tab_bar_min_tabs 1
 background #1a1a1f
 background_opacity 0.9
-initial_window_width  1280
-initial_window_height 800
-active_tab_title_template "{index}"
+initial_window_width  640
+initial_window_height 400
+active_tab_title_template "{index} {title}"
 active_tab_foreground   #000
 active_tab_background   #eee
 active_tab_font_style   bold-italic
@@ -21,5 +21,3 @@ inactive_tab_background #999
 inactive_tab_font_style normal
 map ctrl+shift+equal change_font_size all +2.0
 map ctrl+shift+minus change_font_size all -2.0
-remember_window_size no
-window_title "term"

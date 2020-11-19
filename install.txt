@@ -16,3 +16,4 @@ noto-fonts
 playerctl
 dunst
 picom
+fish

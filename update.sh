@@ -45,6 +45,14 @@ else
     cp -R ./config/rofi $HOME/.config/
 fi
 
+# fish
+if [ -d "$HOME/.config/fish" ]
+then
+    cp ./config/fish/* $HOME/.config/fish/
+else 
+    cp -R ./config/fish $HOME/.config/
+fi
+
 # picom
 if [ -d "$HOME/.config/picom" ]
 then

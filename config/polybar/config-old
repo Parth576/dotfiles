@@ -157,7 +157,8 @@ label-focused = %index%
 ;label-focused-background = ${colors.background-alt}
 label-focused-background = ${colors.background}
 ;label-focused-background = #aa07abd9
-label-focused-underline= #aa07abd9
+;label-focused-underline= #aa07abd9
+label-focused-underline=#6790EB
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor

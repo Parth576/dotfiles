@@ -92,6 +92,14 @@ else
     sudo -u $SUDO_USER cp -R ./config/rofi /home/$SUDO_USER/.config/
 fi
 
+# fish
+if [ -d "/home/$SUDO_USER/.config/fish" ]
+then
+    sudo -u $SUDO_USER cp ./config/fish/* /home/$SUDO_USER/.config/fish/
+else 
+    sudo -u $SUDO_USER cp -R ./config/fish /home/$SUDO_USER/.config/
+fi
+
 # dunst
 if [ -d "/home/$SUDO_USER/.config/dunst" ]
 then
