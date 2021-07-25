@@ -10,6 +10,7 @@ setopt prompt_subst
 zstyle :compinstall filename '/home/parth/.zshrc'
 
 export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/Projects/scripts
 export EDITOR=/usr/bin/nvim
 source $HOME/.zsh/plugins/completion.zsh
 
@@ -59,13 +60,18 @@ listvenv() {
 }
 
 lsvenv() {
-	venv $1
-	myvar=$(pip freeze)
-	deactivate
-	echo $myvar
+    if [ $# -eq 0 ]
+      then
+        echo "Please provide venv name"
+      else
+        venv $1
+        myvar=$(pip freeze)
+        deactivate
+        echo $myvar
+    fi
 }
 
-export TERM=xterm-256color
+#export TERM=xterm-256color
 
 fpath+=$HOME/.zsh/pure
 
