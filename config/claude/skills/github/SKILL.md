@@ -1,6 +1,6 @@
 ---
 name: github
-description: Use this skill when the user wants to interact with GitHub using the GitHub CLI. Trigger when the user wants to find repositories, list or search issues, list or search pull requests, view PR details, read PR comments, find a PR by branch name, or perform other GitHub read operations. Also trigger when the user references a PR number, branch name, or issue number and wants information from GitHub.
+description: Use this skill when the user wants to interact with GitHub using the GitHub CLI. Trigger when the user wants to find repositories, list or search issues, list or search pull requests, view PR details, read PR comments, find a PR by branch name, create or edit issues, create or edit pull requests, comment on issues or PRs, or perform other GitHub operations. Also trigger when the user references a PR number, branch name, or issue number and wants information from GitHub.
 type: anthropic-skill
 version: "1.0"
 ---
@@ -9,13 +9,13 @@ version: "1.0"
 
 ## Overview
 
-This skill uses the GitHub CLI (`ghclaude`) to find repositories, list and search issues and pull requests, read PR comments, match PRs by branch name, and retrieve other GitHub information. It interprets the user's intent, determines the correct repository context, constructs the appropriate `ghclaude` commands, and presents results clearly.
+This skill uses the GitHub CLI (`ghclaude`) to find repositories, list and search issues and pull requests, read PR comments, match PRs by branch name, create and edit issues and pull requests, comment on issues and PRs, and retrieve other GitHub information. It interprets the user's intent, determines the correct repository context, constructs the appropriate `ghclaude` commands, and presents results clearly.
 
 ## Parameters
 
 - **query** (required): What the user wants to find or view. Can be a natural language request, a PR number, a branch name, an issue number, or a search term.
 - **repo** (optional): Target repository in `owner/repo` format. If omitted, inferred from the current git remote or asked from the user.
-- **action** (optional): Explicit action override. One of: `find-repos`, `list-issues`, `view-issue`, `list-prs`, `view-pr`, `pr-comments`, `find-pr-by-branch`, `search`.
+- **action** (optional): Explicit action override. One of: `find-repos`, `list-issues`, `view-issue`, `create-issue`, `edit-issue`, `close-issue`, `reopen-issue`, `comment-issue`, `list-prs`, `view-pr`, `create-pr`, `edit-pr`, `close-pr`, `merge-pr`, `comment-pr`, `review-pr`, `pr-comments`, `find-pr-by-branch`, `search`.
 
 **Constraints for parameter acquisition:**
 - You MUST infer the repo from `git remote get-url origin` when inside a git repository and repo is not provided
@@ -35,6 +35,17 @@ This skill uses the GitHub CLI (`ghclaude`) to find repositories, list and searc
 | `view-pr` | `ghclaude pr view <number-or-branch> --repo <repo>` |
 | `pr-comments` | `ghclaude pr view <number> --repo <repo> --comments` |
 | `find-pr-by-branch` | `ghclaude pr list --repo <repo> --head <branch>` |
+| `create-issue` | `ghclaude issue create --repo <repo> --title <title> [--body <body>] [--label <label>] [--assignee <user>]` |
+| `edit-issue` | `ghclaude issue edit <number> --repo <repo> [--title <title>] [--body <body>] [--add-label <label>] [--remove-label <label>]` |
+| `close-issue` | `ghclaude issue close <number> --repo <repo> [--reason <completed\|not_planned>]` |
+| `reopen-issue` | `ghclaude issue reopen <number> --repo <repo>` |
+| `comment-issue` | `ghclaude issue comment <number> --repo <repo> --body <body>` |
+| `create-pr` | `ghclaude pr create --repo <repo> --title <title> [--body <body>] [--base <branch>] [--head <branch>] [--draft]` |
+| `edit-pr` | `ghclaude pr edit <number> --repo <repo> [--title <title>] [--body <body>] [--add-label <label>] [--add-reviewer <user>]` |
+| `close-pr` | `ghclaude pr close <number> --repo <repo>` |
+| `merge-pr` | `ghclaude pr merge <number> --repo <repo> [--merge\|--squash\|--rebase] [--delete-branch]` |
+| `comment-pr` | `ghclaude pr comment <number> --repo <repo> --body <body>` |
+| `review-pr` | `ghclaude pr review <number> --repo <repo> [--approve\|--request-changes\|--comment] [--body <body>]` |
 | `search` | `ghclaude search issues`, `ghclaude search prs`, `ghclaude search repos` |
 
 ## Steps
@@ -70,6 +81,15 @@ Map the user's query to the correct `ghclaude` command and flags.
 - "find repos about neovim" → `ghclaude search repos neovim`
 - "closed PRs by alice" → `ghclaude pr list --repo <repo> --state closed --author alice`
 - "issues with label bug" → `ghclaude issue list --repo <repo> --label bug`
+- "create an issue about login bug" → `ghclaude issue create --repo <repo> --title "Login bug" --body "<details>"`
+- "close issue 15" → `ghclaude issue close 15 --repo <repo>`
+- "comment on issue 8 saying it's fixed" → `ghclaude issue comment 8 --repo <repo> --body "It's fixed"`
+- "create a PR for this branch" → `ghclaude pr create --repo <repo> --title "<title>" --body "<body>"`
+- "create a draft PR" → `ghclaude pr create --repo <repo> --title "<title>" --draft`
+- "merge PR 50 with squash" → `ghclaude pr merge 50 --repo <repo> --squash --delete-branch`
+- "approve PR 33" → `ghclaude pr review 33 --repo <repo> --approve`
+- "request changes on PR 33" → `ghclaude pr review 33 --repo <repo> --request-changes --body "<feedback>"`
+- "add label bug to issue 12" → `ghclaude issue edit 12 --repo <repo> --add-label bug`
 
 ### 3. Execute and Present Results
 
@@ -84,6 +104,11 @@ Run the command and present the output clearly.
 - You SHOULD highlight the PR branch name, base branch, and merge status when viewing a PR
 - You SHOULD note if a list is truncated and suggest adding `--limit` or filters to narrow results
 - You MUST NOT fabricate or summarize data that was not returned by `ghclaude` — only present what the CLI returned
+- For write operations (create, edit, close, merge, comment, review): you MUST confirm the action with the user before executing, showing exactly what will be created/modified
+- You MUST NOT create issues or PRs with placeholder content — always use the user's actual intent for titles and bodies
+- When creating a PR, you MUST infer the head branch from the current git branch (`git branch --show-current`) if not specified
+- When creating a PR, you SHOULD default `--base` to the repo's default branch if not specified
+- When merging a PR, you SHOULD ask the user for merge strategy (merge, squash, rebase) if not specified
 
 ### 4. Offer Follow-up Actions
 
@@ -91,10 +116,12 @@ After presenting results, suggest logical next steps.
 
 **Constraints:**
 - You MUST offer relevant follow-up options based on what was shown:
-  - After listing PRs: offer to view a specific PR or its comments
-  - After viewing a PR: offer to show comments, open in browser (`ghclaude pr view --web`), or check out the branch (`ghclaude pr checkout <number>`)
-  - After listing issues: offer to view a specific issue
-  - After finding a PR by branch: offer to view it or show its comments
+  - After listing PRs: offer to view a specific PR, its comments, or merge/close one
+  - After viewing a PR: offer to show comments, approve/review, merge, open in browser (`ghclaude pr view --web`), or check out the branch (`ghclaude pr checkout <number>`)
+  - After listing issues: offer to view a specific issue, close one, or comment on one
+  - After viewing an issue: offer to comment, close, edit labels, or reassign
+  - After finding a PR by branch: offer to view it, show its comments, or merge it
+  - After creating an issue or PR: offer to view it in browser or add labels/reviewers
 - You SHOULD only list follow-up options that make sense for the current result
 - You MUST NOT automatically perform follow-up actions without user confirmation
 
@@ -114,6 +141,17 @@ After presenting results, suggest logical next steps.
 | `--web` | Open the item in the browser |
 | `--json fields` | Output as JSON with specified fields |
 | `-q jq-expr` | Filter JSON output with jq |
+| `--title text` | Set title (create/edit issues and PRs) |
+| `--body text` | Set body text (create/edit/comment) |
+| `--draft` | Create PR as draft |
+| `--add-label name` | Add a label (edit issues/PRs) |
+| `--remove-label name` | Remove a label (edit issues/PRs) |
+| `--add-reviewer user` | Add a reviewer (edit PRs) |
+| `--merge` | Merge with a merge commit |
+| `--squash` | Merge with squash |
+| `--rebase` | Merge with rebase |
+| `--delete-branch` | Delete branch after merging |
+| `--reason completed\|not_planned` | Reason when closing an issue |
 
 ## Examples
 
@@ -163,6 +201,60 @@ ghclaude repo list acme --limit 30
 ```
 User: show closed PRs by alice
 ghclaude pr list --repo owner/repo --state closed --author alice
+```
+
+### Create an issue
+```
+User: create an issue about the broken dark mode toggle
+ghclaude issue create --repo owner/repo --title "Broken dark mode toggle" --body "The dark mode toggle on the settings page does not persist the preference."
+```
+
+### Close an issue
+```
+User: close issue 23
+ghclaude issue close 23 --repo owner/repo
+```
+
+### Comment on an issue
+```
+User: comment on issue 15 that this is a duplicate of issue 10
+ghclaude issue comment 15 --repo owner/repo --body "Duplicate of #10"
+```
+
+### Create a pull request
+```
+User: create a PR for this branch
+ghclaude pr create --repo owner/repo --title "Add dark mode support" --body "Implements dark mode toggle and persistence." --head feature/dark-mode
+```
+
+### Create a draft PR
+```
+User: create a draft PR
+ghclaude pr create --repo owner/repo --title "WIP: Refactor auth module" --draft
+```
+
+### Merge a PR
+```
+User: squash merge PR 50
+ghclaude pr merge 50 --repo owner/repo --squash --delete-branch
+```
+
+### Approve a PR
+```
+User: approve PR 33
+ghclaude pr review 33 --repo owner/repo --approve
+```
+
+### Request changes on a PR
+```
+User: request changes on PR 33, the tests are missing
+ghclaude pr review 33 --repo owner/repo --request-changes --body "Please add tests for the new endpoints."
+```
+
+### Add a label to an issue
+```
+User: add the bug label to issue 12
+ghclaude issue edit 12 --repo owner/repo --add-label bug
 ```
 
 ## Troubleshooting
