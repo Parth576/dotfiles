@@ -1,0 +1,61 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=4000
+SAVEHIST=4000
+bindkey -v
+export KEYTIMEOUT=1
+setopt prompt_subst
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/parth/.zshrc'
+
+# Aliases
+alias vim=nvim
+alias ls='ls -1 --color --group-directories-first'
+alias temps="watch -n 1 -d sensors"
+alias cleanjournal='sudo journalctl --vacuum-size=1G --vacuum-time=5d'
+alias c="tmux show-buffer | wl-copy"
+alias mergetool="git mergetool --tool=nvimdiff2"
+alias ghclaude='GH_TOKEN=github_pat_****'
+alias agent='PI_CONTAINER_RUNTIME=podman PI_LOCAL_MODELS=1 mise run pi'
+
+# Pure prompt stuff
+#fpath+=($HOME/.zsh/pure)
+#autoload -U promptinit; promptinit
+#prompt pure
+#
+#source $HOME/.zsh/plugins/completion.zsh
+#source $HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+bindkey "^R" history-incremental-search-backward
+
+#source /home/parth/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+#autoload -Uz compinit
+#compinit
+# End of lines added by compinstall
+export GOPATH=$HOME/go
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/parth/.lmstudio/bin"
+
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+eval "$(starship init zsh)"
+
+# bun completions
+[ -s "/home/parth/.bun/_bun" ] && source "/home/parth/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# opencode
+export PATH=/home/parth/.opencode/bin:$PATH
+
+. "$HOME/.local/bin/env"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/parth/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/parth/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/parth/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/parth/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

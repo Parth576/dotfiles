@@ -9,10 +9,6 @@
     "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1",
     "DISABLE_TELEMETRY": "1"
   },
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
   "permissions": {
     "allow": [
       "Bash(git commit *)",
@@ -135,10 +131,21 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "model": "opus",
+  "model": "sonnet",
   "statusLine": {
     "type": "command",
-    "command": "input=$(cat); model=$(echo \"$input\" | jq -r '.model.display_name'); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); used=$(echo \"$input\" | jq -r '.context_window.total_input_tokens + .context_window.total_output_tokens'); total=$(echo \"$input\" | jq -r '.context_window.context_window_size'); percentage=$(echo \"$input\" | jq -r '.context_window.used_percentage // 0'); if [ -d \"$cwd/.git\" ]; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null || echo \"\"); [ -n \"$branch\" ] && git_info=\" ($branch)\" || git_info=\"\"; else git_info=\"\"; fi; echo \"$model | $cwd$git_info | context: $used/$total ($percentage%)\""
+    "command": "input=$(cat); model=$(echo \"$input\" | jq -r '.model.display_name'); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); total=$(echo \"$input\" | jq -r '.context_window.context_window_size'); percentage=$(echo \"$input\" | jq -r '.context_window.used_percentage // 0'); used_tokens=$(echo \"$input\" | jq -r '.context_window.total_input_tokens // empty'); branch=$(git --no-optional-locks -C \"$cwd\" symbolic-ref --short HEAD 2>/dev/null); if [ -z \"$branch\" ]; then short_hash=$(git --no-optional-locks -C \"$cwd\" rev-parse --short HEAD 2>/dev/null); [ -n \"$short_hash\" ] && branch=\"($short_hash)\"; fi; worktree=$(echo \"$input\" | jq -r '.workspace.git_worktree // empty'); if [ -n \"$worktree\" ]; then wt_info=\" (WT: $worktree)\"; else wt_info=\"\"; fi; if [ -n \"$branch\" ]; then git_info=\"$wt_info Git: $branch\"; else git_info=\"\"; fi; if [ -n \"$used_tokens\" ]; then actual_used=\"$used_tokens\"; else actual_used=$(echo \"scale=0; $total * $percentage / 100\" | bc 2>/dev/null || echo \"0\"); fi; five=$(echo \"$input\" | jq -r '.rate_limits.five_hour.used_percentage // empty'); week=$(echo \"$input\" | jq -r '.rate_limits.seven_day.used_percentage // empty'); rl=\"\"; [ -n \"$five\" ] && rl=\" | 5h: $(printf '%.0f' \"$five\")%\"; [ -n \"$week\" ] && rl=\"$rl 7d: $(printf '%.0f' \"$week\")%\"; echo \"$model | $cwd$git_info | context: $actual_used/$total ($percentage%)$rl\""
+  },
+  "enabledPlugins": {
+    "impeccable@impeccable": true
+  },
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    }
   },
   "sandbox": {
     "enabled": true,
@@ -146,11 +153,17 @@
     "allowUnsandboxedCommands": false,
     "network": {
       "allowedDomains": [
-        "github.com"
+        "github.com",
+        "docs.aws.amazon.com"
       ]
     },
     "excludedCommands": [
       "podman"
     ]
-  }
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
+  "voiceEnabled": true
 }
